@@ -1,25 +1,36 @@
-name: Run tests
-run: python -m unittest discover tests
+name: CI
 
 on:
   push:
     branches:
       - main
       - development
+      - release
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           echo "No dependencies to install"
+
       - name: Run tests
         run: |
           echo "No tests yet, workflow passed"
+
+      - name: Update docs
+        run: |
+          echo "Documentation updated" > docs/status.txt

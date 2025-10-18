@@ -13,8 +13,9 @@ on:
       - release
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+<<<<<<< HEAD
 
     steps:
       # Шаг 1: Клонируем репозиторий
@@ -22,24 +23,45 @@ jobs:
         uses: actions/checkout@v3
 
       # Шаг 2: Настраиваем Python
+=======
+
+    steps:
+      # Клонируем репозиторий
+      - uses: actions/checkout@v3
+
+      # Устанавливаем Python
+>>>>>>> style-guide
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
+<<<<<<< HEAD
       # Шаг 3: Устанавливаем зависимости
+=======
+      # Устанавливаем зависимости
+>>>>>>> style-guide
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+<<<<<<< HEAD
       # Шаг 4: Запускаем тесты
+=======
+      # Запускаем тесты
+>>>>>>> style-guide
       - name: Run tests
         run: |
           if [ -d tests ]; then python -m unittest discover tests; fi
 
+<<<<<<< HEAD
       # Шаг 5: Обновляем документацию
+=======
+      # Автоматическая генерация документации
+>>>>>>> style-guide
       - name: Update docs
         run: |
           mkdir -p docs
           echo "Documentation updated" > docs/status.txt
+

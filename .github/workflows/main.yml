@@ -1,6 +1,5 @@
 name: CI/CD Pipeline
 
-# Запуск workflow при пуше в указанные ветки и при Pull Request
 on:
   push:
     branches:
@@ -11,44 +10,35 @@ on:
     branches:
       - main
       - development
-      - release
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Клонируем репозиторий
+      # Клонируем репозиторий
       - uses: actions/checkout@v3
 
-      # 2. Устанавливаем Python
+      # Устанавливаем Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      # 3. Устанавливаем зависимости
+      # Устанавливаем зависимости
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # 4. Запуск тестов
+      # Запускаем тесты
       - name: Run tests
         run: |
           if [ -d tests ]; then python -m unittest discover tests; fi
 
-      # 5. Автоматическое обновление документации
+      # Автоматическая генерация документации
       - name: Update docs
         run: |
           mkdir -p docs
-          echo "Documentation updated on $(date)" > docs/status.txt
+          echo "Documentation updated" > docs/status.txt
 
-      # 6. Пуш обновлённой документации обратно в ту же ветку
-      - name: Commit updated docs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/status.txt
-          git commit -m "Update docs via CI/CD" || echo "No changes to commit"
-          git push

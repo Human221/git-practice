@@ -1,33 +1,30 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
       - main
       - development
-      - release
   pull_request:
     branches:
       - main
+      - development
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Python
+      - uses: actions/checkout@v3
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
-      - name: Dummy install
-        run: echo "No dependencies to install"
-
-      - name: Dummy tests
-        run: echo "No tests to run, workflow passed"
-
-      - name: Dummy docs update
-        run: echo "Documentation updated"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: python -m unittest discover tests
+      - name: Update docs
+        run: echo "Documentation updated" > docs/status.txt

@@ -23,14 +23,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          echo "No dependencies to install"
+      - name: Dummy install
+        run: echo "No dependencies to install"
 
-      - name: Run tests
-        run: |
-          echo "No tests yet, workflow passed"
+      - name: Dummy tests
+        run: echo "No tests to run, workflow passed"
 
-      - name: Update docs
-        run: |
-          echo "Documentation updated" > docs/status.txt
+      - name: Dummy docs update
+        run: echo "Documentation updated"

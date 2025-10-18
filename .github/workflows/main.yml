@@ -1,6 +1,5 @@
 name: CI/CD Pipeline
 
-# Триггер на пуши и PR для всех нужных веток
 on:
   push:
     branches:
@@ -11,35 +10,30 @@ on:
     branches:
       - main
       - development
-      - release
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Клонируем репозиторий
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # 2. Настраиваем Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      # 3. Устанавливаем зависимости (если requirements.txt нет, создадим пустой)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -r requirements.txt
 
-      # 4. Прогоняем тесты
       - name: Run tests
-        run: |
-          if [ -d tests ]; then python -m unittest discover tests; else echo "No tests folder"; fi
+        run: python -m unittest discover tests
 
-      # 5. Обновляем документацию
       - name: Update docs
         run: |
           mkdir -p docs
           echo "Documentation updated" > docs/status.txt
+

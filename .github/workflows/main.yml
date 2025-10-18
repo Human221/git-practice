@@ -1,4 +1,5 @@
-name: CI
+name: Run tests
+run: python -m unittest discover tests
 
 on:
   push:
